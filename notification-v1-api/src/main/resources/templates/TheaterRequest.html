@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            max-width: 600px;
+            margin: 30px auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        h2 {
+            color: #333333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        p {
+            color: #555555;
+            line-height: 1.6;
+            margin: 12px 0;
+        }
+
+        .details {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .details p {
+            margin: 6px 0;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #ffffff;
+            margin: 0 10px;
+            display: inline-block;
+        }
+
+        .approve {
+            background-color: #4CAF50;
+        }
+
+        .reject {
+            background-color: #f44336;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #999999;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <p>Dear [[${adminName}]],</p>
+
+    <h2>New Theater Registration Request</h2>
+
+    <div class="details">
+        <p><strong>Theater Name:</strong> [[${theaterName}]]</p>
+        <p><strong>Address:</strong> [[${theaterAddress}]], [[${theaterState}]] - [[${pinCode}]]</p>
+        <p><strong>Owner:</strong> [[${ownerName}]] ([[${ownerEmail}]])</p>
+    </div>
+
+    <p>Please review the above information and choose an action below:</p>
+
+    <div class="button-container">
+        <a href="${approveUrl}" class="button approve">Approve</a>
+        <a href="${rejectUrl}" class="button reject">Reject</a>
+    </div>
+
+    <div class="footer">
+        <p>This is an automated message from Book My Show System.</p>
+    </div>
+</div>
+</body>
+</html>
