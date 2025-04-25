@@ -26,7 +26,7 @@ public class TheaterMailService {
         Context context = new Context(); //context class is used to set the values of variables used in the html code
 
         context.setVariable("adminName",theaterRequestBody.getAdmin().getName());
-        context.setVariable("theaterName",theaterRequestBody.getTheater().getId());
+        context.setVariable("theaterName",theaterRequestBody.getTheater().getName());
         context.setVariable("theaterAddress",theaterRequestBody.getTheater().getAddress());
         context.setVariable("theaterState",theaterRequestBody.getTheater().getState());
         context.setVariable("pinCode",theaterRequestBody.getTheater().getPinCode());
@@ -38,7 +38,6 @@ public class TheaterMailService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        message.setSubject("A new theater %s has been registered and is awaiting for approval",theaterRequestBody.getTheater().getName());
         helper.setTo(theaterRequestBody.getAdmin().getEmail());
         helper.setText(htmlEmail,true); // true because it uses html content
 

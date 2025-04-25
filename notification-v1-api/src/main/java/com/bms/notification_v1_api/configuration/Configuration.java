@@ -6,12 +6,27 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.thymeleaf.TemplateEngine;
 
+import java.util.Properties;
+
 @org.springframework.context.annotation.Configuration
 public class Configuration {
 
     @Bean
     public JavaMailSender getJavaMailSender(){
-        return new JavaMailSenderImpl();
+
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("accioshoppingwebsite@gmail.com");
+        mailSender.setPassword("relcfdwhahhcvokv");
+
+        Properties props = mailSender.getJavaMailProperties();
+
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        return mailSender;
     }
 
     @Bean
