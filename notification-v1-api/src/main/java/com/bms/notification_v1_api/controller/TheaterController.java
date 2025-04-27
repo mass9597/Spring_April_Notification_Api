@@ -4,10 +4,7 @@ import com.bms.notification_v1_api.requestbody.TheaterRequestBody;
 import com.bms.notification_v1_api.service.TheaterMailService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/notification/theater")
@@ -16,7 +13,7 @@ public class TheaterController {
     @Autowired
     TheaterMailService mailService;
 
-    @GetMapping("/notify")
+    @PutMapping("/notify")
     public void notifyAdminForTheaterCreation(@RequestBody TheaterRequestBody theaterRequestBody) throws MessagingException {
 
         mailService.notifyAdminForTheaterCreation(theaterRequestBody);

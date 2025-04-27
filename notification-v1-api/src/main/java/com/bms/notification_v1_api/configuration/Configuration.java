@@ -1,6 +1,8 @@
 package com.bms.notification_v1_api.configuration;
 
 
+import org.modelmapper.ModelMapper;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -32,5 +34,15 @@ public class Configuration {
     @Bean
     public TemplateEngine getTemplateEngine(){
         return new TemplateEngine();
+    }
+
+    @Bean
+    public Jackson2JsonMessageConverter jsonMessageConvertor(){
+        return new Jackson2JsonMessageConverter();
+    }
+
+    @Bean
+    public ModelMapper getModelMapper(){
+        return new ModelMapper();
     }
 }
