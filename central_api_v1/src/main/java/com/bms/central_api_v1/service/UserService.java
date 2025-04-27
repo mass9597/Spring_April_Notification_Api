@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.net.UnknownServiceException;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -43,5 +44,9 @@ public class UserService {
 
         return theaterOwner.getUserType().equals(UserType.THEATER_OWNER.toString()) ? true : false;
 
+    }
+
+    public List<AppUser> getAllAdmins(){
+        return dbApi.getAllAdmins();
     }
 }

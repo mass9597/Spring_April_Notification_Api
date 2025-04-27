@@ -5,9 +5,10 @@ import com.bms.central_api_v1.model.AppUser;
 import com.bms.central_api_v1.model.Theater;
 import com.bms.central_api_v1.requestdto.CreateTheaterRB;
 import com.bms.central_api_v1.requestdto.CreateUserDb;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class Mapper {
 
     public AppUser mapCreateUserDbToAppUser(CreateUserDb createUserDb){

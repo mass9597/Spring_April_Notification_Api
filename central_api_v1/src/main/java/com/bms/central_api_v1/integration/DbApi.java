@@ -4,6 +4,7 @@ import com.bms.central_api_v1.model.AppUser;
 import com.bms.central_api_v1.model.Theater;
 import com.bms.central_api_v1.requestdto.CreateTheaterRB;
 import com.bms.central_api_v1.requestdto.CreateUserDb;
+import com.bms.central_api_v1.responseBody.AdminResponseBody;
 import com.bms.central_api_v1.util.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
-@Service
+@Component
 public class DbApi extends RestApi{
 
     @Value("${db.api.base}")
@@ -70,5 +73,17 @@ public class DbApi extends RestApi{
         Object res = this.makePostCall(baseUrl,endPoint,theater,new HashMap<>());
 
         return modelMapper.map(res,Theater.class);
+    }
+
+    public List<AppUser> getAllAdmins(){
+
+        String endPoint = "/user/admins";
+
+        Object response = this.makeGetCall(baseUrl,endPoint,new HashMap<>());
+
+        AdminResponseBody admins = modelMapper.map(response,AdminResponseBody.class);
+
+        return admins.getAdmins();
+
     }
 }
