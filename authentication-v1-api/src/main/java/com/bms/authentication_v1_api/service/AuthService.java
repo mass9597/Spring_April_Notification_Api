@@ -1,8 +1,12 @@
 package com.bms.authentication_v1_api.service;
 
 
+import com.bms.authentication_v1_api.integration.DbApi;
+import com.bms.authentication_v1_api.models.AppUser;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +14,9 @@ import java.util.Date;
 
 @Service
 public class AuthService {
+
+    @Autowired
+    DbApi dbApi;
 
     @Value("${auth.secret.key}")
     String secretKey;
@@ -31,7 +38,29 @@ public class AuthService {
 
     }
 
+    public String decrypt(String token){
+        String credentials = Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(token).getBody().getSubject();
+
+        return credentials;
+    }
+
     public boolean verifyToken(String token){
+
+        String credentials = this.decrypt(token);
+
+        String email = credentials.split(":")[0];
+        String password = credentials.split(":")[1];
+
+        AppUser user = dbApi.callGetUserByEmail(email);
+
+        if(user == null){
+            return false;
+        }
+        if(user.getPassword().equalsIgnoreCase(password)){
+            return true;
+        }
+        return false;
 
     }
 }
