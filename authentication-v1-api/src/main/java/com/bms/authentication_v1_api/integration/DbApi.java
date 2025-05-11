@@ -14,11 +14,11 @@ public class DbApi extends RestApi{
     @Autowired
     ModelMapper modelMapper;
 
-    @Value("{db.api.base}")
+    @Value("${db.api.base}")
     String baseUrl;
 
     public AppUser callGetUserByEmail(String emailId){
-        String endPoint = "/user/email"+ emailId;
+        String endPoint = "/user/email/"+ emailId.toString();
         Object response = this.makeGetCall(baseUrl,endPoint,new HashMap<>());
 
         if(response == null){
