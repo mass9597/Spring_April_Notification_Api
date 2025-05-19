@@ -21,7 +21,7 @@ public class AuthService {
     @Value("${auth.secret.key}")
     String secretKey;
 
-    Long expirationTime = 100000L;
+    Long expirationTime = 10000000L;
 
     public String generateToken(String userId, String password){
 
