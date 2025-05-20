@@ -2,6 +2,7 @@ package com.bms.central_api_v1.integration;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -69,6 +70,31 @@ public abstract class RestApi {
         URI finalUrl = URI.create(url);
 
         RequestEntity requestEntity = RequestEntity.get(finalUrl).build();
+
+        //TO HIT the endpoint we need resttemplate library
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<Object> response = restTemplate.exchange(finalUrl, HttpMethod.GET,requestEntity,Object.class);
+
+        return response.getBody();
+
+    }
+
+    // method overloading in get call, as we need to pass headers/token
+    public Object makeGetCall(String apiBaseUrl,
+                              String apiEndPoint,
+                              Map<String,?> queryParams,
+                              String token){
+
+        String url = apiBaseUrl+apiEndPoint;
+        url = this.addQueryParam(url,queryParams);
+        URI finalUrl = URI.create(url);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization",token);
+
+        RequestEntity requestEntity = RequestEntity.get(finalUrl).headers(headers).build();
 
         //TO HIT the endpoint we need resttemplate library
 

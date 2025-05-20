@@ -3,6 +3,7 @@ package com.bms.central_api_v1.service;
 
 import com.bms.central_api_v1.enums.UserType;
 import com.bms.central_api_v1.exception.UserNotFoundException;
+import com.bms.central_api_v1.integration.AuthApi;
 import com.bms.central_api_v1.integration.DbApi;
 import com.bms.central_api_v1.model.AppUser;
 import com.bms.central_api_v1.requestdto.CreateUserDb;
@@ -18,13 +19,21 @@ import java.util.UUID;
 @Slf4j
 public class UserService {
 
+
+    @Autowired
+    AuthApi authApi;
+
     @Autowired
     DbApi dbApi;
 
     public Object registerUser(CreateUserDb createUserDb){
 
         log.info("central api controller call the service and passes the request body"+createUserDb.toString());
-         return dbApi.createUser(createUserDb);
+         AppUser user =  dbApi.createUser(createUserDb);
+
+         log.info("user email and password returned to authapi"+user.getEmail()+user.getPassword());
+         return authApi.callGetToken(user.getEmail(),user.getPassword());
+
     }
 
     public AppUser getUserById(UUID userId){

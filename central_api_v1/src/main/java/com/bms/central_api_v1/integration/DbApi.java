@@ -1,6 +1,7 @@
 package com.bms.central_api_v1.integration;
 
 import com.bms.central_api_v1.model.AppUser;
+import com.bms.central_api_v1.model.Hall;
 import com.bms.central_api_v1.model.Theater;
 import com.bms.central_api_v1.requestdto.CreateTheaterRB;
 import com.bms.central_api_v1.requestdto.CreateUserDb;
@@ -85,5 +86,27 @@ public class DbApi extends RestApi{
 
         return admins.getAdmins();
 
+    }
+
+    public Theater getTheaterById(UUID theaterId){
+        String endPoint = "/theater/"+ theaterId;
+
+        Object response = this.makeGetCall(baseUrl,endPoint,new HashMap<>());
+
+        return modelMapper.map(response, Theater.class);
+    }
+
+    public Theater updateTheater(Theater theater){
+         String endPoint = "/theater/update";
+
+         Object response = this.makePutCall(baseUrl,endPoint,theater,new HashMap<>());
+         return modelMapper.map(response, Theater.class);
+    }
+
+    public Hall createHall(Hall hall){
+        String endPoint = "/hall/create";
+
+        Object response = this.makePostCall(baseUrl,endPoint,hall,new HashMap<>());
+        return modelMapper.map(response, Hall.class);
     }
 }
