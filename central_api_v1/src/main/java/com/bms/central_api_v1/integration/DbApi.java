@@ -1,11 +1,10 @@
 package com.bms.central_api_v1.integration;
 
-import com.bms.central_api_v1.model.AppUser;
-import com.bms.central_api_v1.model.Hall;
-import com.bms.central_api_v1.model.Theater;
+import com.bms.central_api_v1.model.*;
 import com.bms.central_api_v1.requestdto.CreateTheaterRB;
 import com.bms.central_api_v1.requestdto.CreateUserDb;
 import com.bms.central_api_v1.responseBody.AdminResponseBody;
+import com.bms.central_api_v1.responseBody.ShowsByHallIdRB;
 import com.bms.central_api_v1.util.Mapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,5 +107,78 @@ public class DbApi extends RestApi{
 
         Object response = this.makePostCall(baseUrl,endPoint,hall,new HashMap<>());
         return modelMapper.map(response, Hall.class);
+    }
+
+    public Movie createMovie(Movie movie){
+        String endpoint = "/movie/create";
+
+        Object response = this.makePostCall(baseUrl,endpoint,movie,new HashMap<>());
+
+        return modelMapper.map(response, Movie.class);
+    }
+
+    public Hall getHallById(UUID hallId){
+        String endPoint = "/hall/"+hallId.toString();
+
+        Object response = this.makeGetCall(baseUrl,endPoint,new HashMap<>());
+
+        return modelMapper.map(response,Hall.class);
+    }
+
+    public Movie getMovieById(UUID movieId){
+        String endPoint = "/movie/"+ movieId.toString();
+
+        Object response = this.makeGetCall(baseUrl,endPoint,new HashMap<>());
+
+        return modelMapper.map(response, Movie.class);
+    }
+
+    public ShowsByHallIdRB getShowsByHallId(UUID hallId){
+        String endPoint = "/show/hall/"+ hallId.toString();
+
+        Object response = this.makeGetCall(baseUrl,endPoint,new HashMap<>());
+
+        return modelMapper.map(response, ShowsByHallIdRB.class);
+    }
+
+    public Show callCreateShowEndpoint(Show show){
+        String endPoint = "/show/create";
+
+        Object response = this.makePostCall(baseUrl,endPoint,show,new HashMap<>());
+
+        return modelMapper.map(response,Show.class);
+    }
+
+    public Show callGetShowById(UUID showId){
+        String endPoint = "/show/"+ showId.toString();
+
+        Object response = this.makeGetCall(baseUrl,endPoint,new HashMap<>());
+
+        return modelMapper.map(response,Show.class);
+    }
+
+    public BookedSeat callIsSeatBookedEndPoint(UUID showId, int seat){
+
+        String endPoint = "/bookedSeat/check";
+
+        HashMap<String,String> queryParam = new HashMap<>();
+
+        queryParam.put("showId",showId.toString());
+        queryParam.put("seat",seat+"");
+
+       Object response = this.makeGetCall(baseUrl,endPoint,queryParam);
+
+       if(response == null){
+           return null;
+       }
+
+       return modelMapper.map(response, BookedSeat.class);
+    }
+
+    public void callCreateBookedSeat(BookedSeat bookedSeat){
+        String endPoint = "/bookedSeat/create";
+
+        this.makePostCall(baseUrl,endPoint,bookedSeat,new HashMap<>());
+
     }
 }

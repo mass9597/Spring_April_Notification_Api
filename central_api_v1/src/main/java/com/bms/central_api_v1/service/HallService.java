@@ -16,11 +16,11 @@ public class HallService {
     @Autowired
     DbApi dbApi;
 
-    public Hall callCreateHall(UUID ownerId, UUID theaterId, String Authorization, CreateHallRB hallRB){
+    public Hall callCreateHall(UUID ownerId, UUID theaterId, CreateHallRB hallRB){
 
         Theater theater = dbApi.getTheaterById(theaterId);
 
-        if(!theater.getOwner().getId().equals(theaterId)){
+        if(!theater.getOwner().getId().equals(ownerId)){
             throw new UnAuthorizedException(String.format(
                     "Theater with id %s does not own by owner with id %s ",theaterId.toString(),ownerId.toString()
             ));
